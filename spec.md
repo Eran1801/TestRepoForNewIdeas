@@ -105,6 +105,29 @@
 2. **גודל טיקט = חלון קונטקסט אחד.** קריטריון חד לגודל משימה, שאפשר לאמץ כהנחיה למנוע הניתוח.
 3. **⚠️ פרוסות אנכיות מול אופקיות.** הסקיל טוען שטיקט צריך לחתוך **פרוסה אנכית** — נתיב שלם דרך כל השכבות, שניתן להדגים לבד — ולא פרוסה של שכבה אחת. **הפיצול שרת/לקוח שלנו הוא פרוסה אופקית**, כלומר בדיוק מה שהוא ממליץ נגדו. זו לא בהכרח טעות (צוותים אמיתיים מפצלים ככה כי אנשים שונים עובדים על כל צד), אבל ההחלטה התקבלה לפני שהטיעון הזה עלה. תיעדתי אותה כ-ADR-001 ב-`CONTEXT.md` יחד עם המתח הזה, ורשמתי אותה כשאלה פתוחה. שווה החלטה מודעת, לא ברירת מחדל.
 
+## טיקטים ב-Jira
+
+הפירוק ל-build פורסם ל-Jira האמיתי (דוגפודינג של המוצר על עצמו), לפי הסקיל `to-tickets`:
+
+**Epic: [SCRUM-6](https://costiproject.atlassian.net/browse/SCRUM-6) — מנתח אפיונים, בניית v1** · פרויקט `SCRUM` ב-`costiproject.atlassian.net`
+
+| טיקט | מה | חוסם אותו |
+|---|---|---|
+| [SCRUM-7](https://costiproject.atlassian.net/browse/SCRUM-7) | שלד מקצה לקצה: העלאת PPTX והצגת הטקסט | — |
+| [SCRUM-8](https://costiproject.atlassian.net/browse/SCRUM-8) | חיבור ל-Board ושליפת Epics/משתמשים/סטטוסים | — |
+| [SCRUM-9](https://costiproject.atlassian.net/browse/SCRUM-9) | חילוץ דרישות עם שקופית וציטוט | SCRUM-7 |
+| [SCRUM-10](https://costiproject.atlassian.net/browse/SCRUM-10) | **יצירת משימה אמיתית ב-Jira** (אבן דרך) | SCRUM-8, SCRUM-9 |
+| [SCRUM-11](https://costiproject.atlassian.net/browse/SCRUM-11) | לוח הקוביות: עריכה וחלון הרחבה | SCRUM-9 |
+| [SCRUM-12](https://costiproject.atlassian.net/browse/SCRUM-12) | פיצול שרת/לקוח לשתי משימות | SCRUM-9 |
+| [SCRUM-13](https://costiproject.atlassian.net/browse/SCRUM-13) | **SPIKE**: החלטה על ההצלבה מול הקוד | SCRUM-9 |
+| [SCRUM-14](https://costiproject.atlassian.net/browse/SCRUM-14) | יצירה מרוכזת | SCRUM-10 |
+| [SCRUM-15](https://costiproject.atlassian.net/browse/SCRUM-15) | אידמפוטנטיות | SCRUM-10 |
+| [SCRUM-16](https://costiproject.atlassian.net/browse/SCRUM-16) | תתי-משימות בצד אחד | SCRUM-10 |
+
+התלויות הן קישורי `Blocks` אמיתיים ב-Jira, לא טקסט. כל הטיקטים מסוג `Task` בלבד, תחת ה-Epic.
+
+**SCRUM-13 הוא ספייק החלטה ולא מימוש** — ההצלבה מול הקוד היא הטענה המרכזית של המוצר וטרם תוכננה. האפשרויות נעות בין ימים (התאמת מילות מפתח) לשבועות (חיפוש סמנטי), ולכן אי אפשר להעריך אותה כרגע. הוא נסגר עם ADR וטיקטי מימוש מוערכים.
+
 ## אב-טיפוס אינטראקטיבי
 
 `prototype/inbox-demo.html` בריפו הזה — קובץ HTML עצמאי אחד (HTML+CSS+JS פשוט, ללא framework, ספריית האנימציה Motion מוטמעת inline) שמדגים את כל הזרימה: מצגת PowerPoint אמיתית (אפיון INBOX) → ניתוח → חיבור ל-Jira → לוח משימות דו-פאנלי עם קישור בין כל משימה למשפט המדויק באפיון שממנו נגזרה. פותח אותו ישירות בדפדפן.
