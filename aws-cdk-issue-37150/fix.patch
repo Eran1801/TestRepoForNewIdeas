@@ -1,0 +1,72 @@
+diff --git a/packages/aws-cdk-lib/aws-stepfunctions/lib/state-machine.ts b/packages/aws-cdk-lib/aws-stepfunctions/lib/state-machine.ts
+index e6ab32a7..9bb78fe9 100644
+--- a/packages/aws-cdk-lib/aws-stepfunctions/lib/state-machine.ts
++++ b/packages/aws-cdk-lib/aws-stepfunctions/lib/state-machine.ts
+@@ -127,6 +127,11 @@ export interface StateMachineProps {
+   /**
+    * Maximum run time for this state machine
+    *
++   * Only supported when `definitionBody` is created with `DefinitionBody.fromChainable()`
++   * (or the deprecated `definition` prop is used). For `DefinitionBody.fromFile()` or
++   * `DefinitionBody.fromString()`, set the `TimeoutSeconds` field directly in the
++   * Amazon States Language definition instead.
++   *
+    * @default No timeout
+    */
+   readonly timeout?: Duration;
+@@ -479,6 +484,15 @@ export class StateMachine extends StateMachineBase {
+ 
+     const definitionBody = props.definitionBody ?? DefinitionBody.fromChainable(props.definition!);
+ 
++    if (props.timeout && !(definitionBody instanceof ChainDefinitionBody)) {
++      throw new ValidationError(
++        lit`TimeoutNotSupported`,
++        'The `timeout` property is only supported when `definitionBody` is created with `DefinitionBody.fromChainable()`. '
++        + 'For `DefinitionBody.fromFile()` or `DefinitionBody.fromString()`, set the `TimeoutSeconds` field directly in your Amazon States Language definition instead.',
++        this,
++      );
++    }
++
+     this.stateMachineType = props.stateMachineType ?? StateMachineType.STANDARD;
+ 
+     let graph: StateGraph | undefined = undefined;
+diff --git a/packages/aws-cdk-lib/aws-stepfunctions/test/state-machine.test.ts b/packages/aws-cdk-lib/aws-stepfunctions/test/state-machine.test.ts
+index 80eb6c7c..0ba9aa6b 100644
+--- a/packages/aws-cdk-lib/aws-stepfunctions/test/state-machine.test.ts
++++ b/packages/aws-cdk-lib/aws-stepfunctions/test/state-machine.test.ts
+@@ -69,6 +69,35 @@ describe('State Machine', () => {
+     }).toThrow('You need to specify either definition or definitionBody');
+   }),
+ 
++  test('Instantiate fails when timeout is used with a string definitionBody', () => {
++    // GIVEN
++    const stack = new cdk.Stack();
++
++    // FAIL
++    expect(() => {
++      new sfn.StateMachine(stack, 'MyStateMachine', {
++        definitionBody: sfn.DefinitionBody.fromString('{"StartAt":"Pass","States":{"Pass":{"Type":"Pass","End":true}}}'),
++        timeout: cdk.Duration.minutes(5),
++      });
++    }).toThrow('The `timeout` property is only supported when `definitionBody` is created with `DefinitionBody.fromChainable()`. For `DefinitionBody.fromFile()` or `DefinitionBody.fromString()`, set the `TimeoutSeconds` field directly in your Amazon States Language definition instead.');
++  }),
++
++  test('timeout is rendered into the definition when using a chainable definitionBody', () => {
++    // GIVEN
++    const stack = new cdk.Stack();
++
++    // WHEN
++    new sfn.StateMachine(stack, 'MyStateMachine', {
++      definitionBody: sfn.DefinitionBody.fromChainable(sfn.Chain.start(new sfn.Pass(stack, 'Pass'))),
++      timeout: cdk.Duration.minutes(5),
++    });
++
++    // THEN
++    Template.fromStack(stack).hasResourceProperties('AWS::StepFunctions::StateMachine', {
++      DefinitionString: Match.stringLikeRegexp('"TimeoutSeconds":300'),
++    });
++  }),
++
+   test('Instantiate Default State Machine', () => {
+     // GIVEN
+     const stack = new cdk.Stack();
