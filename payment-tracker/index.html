@@ -81,20 +81,41 @@
     transition: width .25s ease;
   }
 
-  .table-card{
+  .years{ display:flex; flex-direction:column; gap: 12px; }
+  .year-block{
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: var(--shadow);
     overflow: hidden;
   }
+  .year-block.is-current{ border-color: var(--accent); }
+  .year-block > summary{
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: var(--accent-soft);
+    user-select: none;
+  }
+  .year-block > summary::-webkit-details-marker{ display: none; }
+  .year-side{ display:flex; align-items:center; gap: 10px; font-weight: 400; }
+  .year-meta{ font-size: .8rem; color: var(--muted); }
+  .chevron{ display:inline-block; color: var(--muted); transition: transform .2s ease; }
+  .year-block[open] > summary .chevron{ transform: rotate(90deg); }
+
   table{ width: 100%; border-collapse: collapse; font-size: .92rem; }
   thead th{
-    position: sticky; top:0;
-    background: var(--accent-soft);
-    color: var(--text);
+    background: var(--bg);
+    color: var(--muted);
     font-weight: 600;
-    padding: 10px 8px;
+    font-size: .78rem;
+    padding: 8px;
     border-bottom: 1px solid var(--border);
     text-align: center;
     white-space: nowrap;
@@ -111,7 +132,6 @@
   tbody tr.current .month-cell{ font-weight: 700; }
   .month-cell{ text-align: center; }
   .idx{ color: var(--muted); font-size: .8rem; }
-  .table-scroll{ max-height: 70vh; overflow-y: auto; }
 
   input[type="checkbox"]{
     width: 20px; height: 20px;
@@ -179,22 +199,7 @@
     <button id="resetBtn" type="button">נקה סימונים</button>
   </div>
 
-  <div class="table-card">
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>חודש</th>
-            <th>תשלום חודשי</th>
-            <th>מצטבר</th>
-            <th>שולם</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-  </div>
+  <div class="years" id="yearsContainer"></div>
 
   <footer>
     הסימונים נשמרים אוטומטית בדפדפן הזה (localStorage), כך שגם אחרי רענון הדף הם יישארו.
@@ -229,48 +234,86 @@
   var currentKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
 
   var months = [];
+  var yearsMap = {};
   for(var i = 0; i < TOTAL_MONTHS; i++){
     var m0 = START_MONTH0 + i;
     var year = START_YEAR + Math.floor(m0 / 12);
     var monthIdx = m0 % 12; // 0-based
     var key = year + '-' + String(monthIdx + 1).padStart(2, '0');
-    months.push({
+    var month = {
       index: i + 1,
       key: key,
       label: HE_MONTHS[monthIdx] + ' ' + year,
       cumulative: (i + 1) * MONTHLY
-    });
+    };
+    months.push(month);
+    var yearKey = String(year);
+    if(!yearsMap[yearKey]) yearsMap[yearKey] = [];
+    yearsMap[yearKey].push(month);
   }
+  var years = Object.keys(yearsMap).sort();
 
-  var tbody = document.getElementById('tbody');
-  months.forEach(function(m){
-    var tr = document.createElement('tr');
-    tr.dataset.key = m.key;
-    if(m.key === currentKey) tr.classList.add('current');
-    if(state[m.key]) tr.classList.add('paid');
+  var container = document.getElementById('yearsContainer');
+  years.forEach(function(year){
+    var monthsInYear = yearsMap[year];
+    var containsCurrent = monthsInYear.some(function(m){ return m.key === currentKey; });
 
-    tr.innerHTML =
-      '<td class="idx">' + m.index + '</td>' +
-      '<td class="month-cell">' + m.label + '</td>' +
-      '<td>' + fmt(MONTHLY) + '</td>' +
-      '<td>' + fmt(m.cumulative) + '</td>' +
-      '<td><input type="checkbox" aria-label="שולם עבור ' + m.label + '"></td>';
+    var details = document.createElement('details');
+    details.className = 'year-block';
+    details.dataset.year = year;
+    if(containsCurrent){
+      details.open = true;
+      details.classList.add('is-current');
+    }
 
-    var checkbox = tr.querySelector('input');
-    checkbox.checked = !!state[m.key];
-    checkbox.addEventListener('change', function(){
-      if(checkbox.checked){
-        state[m.key] = true;
-        tr.classList.add('paid');
-      } else {
-        delete state[m.key];
-        tr.classList.remove('paid');
-      }
-      saveState(state);
-      updateSummary();
+    var summary = document.createElement('summary');
+    summary.innerHTML =
+      '<span class="year-label">' + year + '</span>' +
+      '<span class="year-side">' +
+        '<span class="year-meta" data-year-meta="' + year + '"></span>' +
+        '<span class="chevron">›</span>' +
+      '</span>';
+    details.appendChild(summary);
+
+    var table = document.createElement('table');
+    table.innerHTML =
+      '<thead><tr>' +
+        '<th>#</th><th>חודש</th><th>תשלום חודשי</th><th>מצטבר</th><th>שולם</th>' +
+      '</tr></thead><tbody></tbody>';
+    var tbody = table.querySelector('tbody');
+
+    monthsInYear.forEach(function(m){
+      var tr = document.createElement('tr');
+      tr.dataset.key = m.key;
+      if(m.key === currentKey) tr.classList.add('current');
+      if(state[m.key]) tr.classList.add('paid');
+
+      tr.innerHTML =
+        '<td class="idx">' + m.index + '</td>' +
+        '<td class="month-cell">' + m.label + '</td>' +
+        '<td>' + fmt(MONTHLY) + '</td>' +
+        '<td>' + fmt(m.cumulative) + '</td>' +
+        '<td><input type="checkbox" aria-label="שולם עבור ' + m.label + '"></td>';
+
+      var checkbox = tr.querySelector('input');
+      checkbox.checked = !!state[m.key];
+      checkbox.addEventListener('change', function(){
+        if(checkbox.checked){
+          state[m.key] = true;
+          tr.classList.add('paid');
+        } else {
+          delete state[m.key];
+          tr.classList.remove('paid');
+        }
+        saveState(state);
+        updateSummary();
+      });
+
+      tbody.appendChild(tr);
     });
 
-    tbody.appendChild(tr);
+    details.appendChild(table);
+    container.appendChild(details);
   });
 
   function updateSummary(){
@@ -285,22 +328,30 @@
     document.getElementById('paidAmount').textContent = fmt(paidAmount) + ' (' + paidCount + '/' + TOTAL_MONTHS + ')';
     document.getElementById('remainingAmount').textContent = fmt(remaining);
     document.getElementById('progressBar').style.width = Math.round((paidCount / TOTAL_MONTHS) * 100) + '%';
+
+    years.forEach(function(year){
+      var monthsInYear = yearsMap[year];
+      var paidInYear = monthsInYear.filter(function(m){ return !!state[m.key]; }).length;
+      var el = document.querySelector('[data-year-meta="' + year + '"]');
+      if(el) el.textContent = paidInYear + '/' + monthsInYear.length + ' שולם';
+    });
   }
 
   document.getElementById('resetBtn').addEventListener('click', function(){
     if(!confirm('לנקות את כל הסימונים ששולמו?')) return;
     state = {};
     saveState(state);
-    document.querySelectorAll('#tbody tr').forEach(function(tr){
+    document.querySelectorAll('#yearsContainer tr').forEach(function(tr){
       tr.classList.remove('paid');
-      tr.querySelector('input').checked = false;
+      var cb = tr.querySelector('input');
+      if(cb) cb.checked = false;
     });
     updateSummary();
   });
 
   updateSummary();
 
-  var currentRow = document.querySelector('tr.current');
+  var currentRow = document.querySelector('#yearsContainer tr.current');
   if(currentRow){
     setTimeout(function(){
       currentRow.scrollIntoView({ block: 'center' });
