@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מעקב תשלומים חודשי</title>
+<style>
+  :root{
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --border: #e3e5ea;
+    --text: #1c1e21;
+    --muted: #6b7280;
+    --accent: #2f6fed;
+    --accent-soft: #eaf1ff;
+    --good: #1a9e6d;
+    --good-soft: #e8f8f1;
+    --shadow: 0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06);
+    --row-current: #fff6e0;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg: #14161a;
+      --card: #1c1f24;
+      --border: #2b2f36;
+      --text: #eceef1;
+      --muted: #9aa1ac;
+      --accent: #6f9dfd;
+      --accent-soft: #1e2a44;
+      --good: #4fd6a2;
+      --good-soft: #123328;
+      --shadow: 0 1px 2px rgba(0,0,0,.3);
+      --row-current: #3a3312;
+    }
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    padding: 24px 16px 64px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", "Heebo", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap{ max-width: 780px; margin: 0 auto; }
+  header{ text-align:center; margin-bottom: 24px; }
+  h1{ font-size: 1.5rem; margin: 0 0 6px; }
+  .subtitle{ color: var(--muted); font-size: .95rem; }
+  .subtitle b{ color: var(--text); }
+
+  .cards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .card{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .card .label{ font-size: .78rem; color: var(--muted); margin-bottom: 4px; }
+  .card .value{ font-size: 1.15rem; font-weight: 700; }
+  .card.good .value{ color: var(--good); }
+  .card.accent .value{ color: var(--accent); }
+
+  .progress-outer{
+    background: var(--border);
+    border-radius: 999px;
+    height: 10px;
+    overflow: hidden;
+    margin: 4px 0 20px;
+  }
+  .progress-inner{
+    height: 100%;
+    background: linear-gradient(90deg, var(--good), var(--accent));
+    width: 0%;
+    transition: width .25s ease;
+  }
+
+  .table-card{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  table{ width: 100%; border-collapse: collapse; font-size: .92rem; }
+  thead th{
+    position: sticky; top:0;
+    background: var(--accent-soft);
+    color: var(--text);
+    font-weight: 600;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    white-space: nowrap;
+  }
+  tbody td{
+    padding: 9px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td{ border-bottom: none; }
+  tbody tr.paid{ background: var(--good-soft); }
+  tbody tr.current td:first-child{ box-shadow: inset 3px 0 0 var(--accent); }
+  tbody tr.current .month-cell{ font-weight: 700; }
+  .month-cell{ text-align: center; }
+  .idx{ color: var(--muted); font-size: .8rem; }
+  .table-scroll{ max-height: 70vh; overflow-y: auto; }
+
+  input[type="checkbox"]{
+    width: 20px; height: 20px;
+    accent-color: var(--good);
+    cursor: pointer;
+  }
+
+  .actions{
+    display:flex; justify-content:flex-end; gap: 8px; margin: 14px 2px;
+  }
+  button{
+    font: inherit;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover{ border-color: var(--accent); color: var(--accent); }
+
+  footer{
+    text-align:center;
+    color: var(--muted);
+    font-size: .8rem;
+    margin-top: 22px;
+  }
+
+  @media (max-width: 480px){
+    .cards{ grid-template-columns: 1fr 1fr; }
+    .cards .card:first-child{ grid-column: 1 / -1; }
+    table{ font-size: .82rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📊 מעקב תשלומים חודשי</h1>
+    <div class="subtitle">
+      תשלום חודשי: <b>₪1,833</b> &nbsp;•&nbsp;
+      התחלה: <b>ספטמבר 2025</b> &nbsp;•&nbsp;
+      סוף: <b>ספטמבר 2030</b>
+    </div>
+  </header>
+
+  <div class="cards">
+    <div class="card accent">
+      <div class="label">סה״כ התחייבות (61 תשלומים)</div>
+      <div class="value" id="totalPlan">–</div>
+    </div>
+    <div class="card good">
+      <div class="label">שולם בפועל</div>
+      <div class="value" id="paidAmount">–</div>
+    </div>
+    <div class="card">
+      <div class="label">נותר לתשלום</div>
+      <div class="value" id="remainingAmount">–</div>
+    </div>
+  </div>
+
+  <div class="progress-outer"><div class="progress-inner" id="progressBar"></div></div>
+
+  <div class="actions">
+    <button id="resetBtn" type="button">נקה סימונים</button>
+  </div>
+
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>חודש</th>
+            <th>תשלום חודשי</th>
+            <th>מצטבר</th>
+            <th>שולם</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    הסימונים נשמרים אוטומטית בדפדפן הזה (localStorage), כך שגם אחרי רענון הדף הם יישארו.
+    השמירה היא מקומית למכשיר/דפדפן הזה בלבד.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var MONTHLY = 1833;
+  var START_YEAR = 2025;
+  var START_MONTH0 = 8; // September, 0-based (Jan=0)
+  var TOTAL_MONTHS = 61; // Sep 2025 .. Sep 2030 inclusive
+  var STORAGE_KEY = 'monthlyPaymentTracker:v1';
+
+  var HE_MONTHS = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+
+  function fmt(n){ return '₪' + n.toLocaleString('he-IL'); }
+
+  function loadState(){
+    try{
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState();
+
+  var now = new Date();
+  var currentKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+
+  var months = [];
+  for(var i = 0; i < TOTAL_MONTHS; i++){
+    var m0 = START_MONTH0 + i;
+    var year = START_YEAR + Math.floor(m0 / 12);
+    var monthIdx = m0 % 12; // 0-based
+    var key = year + '-' + String(monthIdx + 1).padStart(2, '0');
+    months.push({
+      index: i + 1,
+      key: key,
+      label: HE_MONTHS[monthIdx] + ' ' + year,
+      cumulative: (i + 1) * MONTHLY
+    });
+  }
+
+  var tbody = document.getElementById('tbody');
+  months.forEach(function(m){
+    var tr = document.createElement('tr');
+    tr.dataset.key = m.key;
+    if(m.key === currentKey) tr.classList.add('current');
+    if(state[m.key]) tr.classList.add('paid');
+
+    tr.innerHTML =
+      '<td class="idx">' + m.index + '</td>' +
+      '<td class="month-cell">' + m.label + '</td>' +
+      '<td>' + fmt(MONTHLY) + '</td>' +
+      '<td>' + fmt(m.cumulative) + '</td>' +
+      '<td><input type="checkbox" aria-label="שולם עבור ' + m.label + '"></td>';
+
+    var checkbox = tr.querySelector('input');
+    checkbox.checked = !!state[m.key];
+    checkbox.addEventListener('change', function(){
+      if(checkbox.checked){
+        state[m.key] = true;
+        tr.classList.add('paid');
+      } else {
+        delete state[m.key];
+        tr.classList.remove('paid');
+      }
+      saveState(state);
+      updateSummary();
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  function updateSummary(){
+    var paidCount = Object.keys(state).filter(function(k){
+      return months.some(function(m){ return m.key === k; });
+    }).length;
+    var totalPlan = TOTAL_MONTHS * MONTHLY;
+    var paidAmount = paidCount * MONTHLY;
+    var remaining = totalPlan - paidAmount;
+
+    document.getElementById('totalPlan').textContent = fmt(totalPlan);
+    document.getElementById('paidAmount').textContent = fmt(paidAmount) + ' (' + paidCount + '/' + TOTAL_MONTHS + ')';
+    document.getElementById('remainingAmount').textContent = fmt(remaining);
+    document.getElementById('progressBar').style.width = Math.round((paidCount / TOTAL_MONTHS) * 100) + '%';
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(!confirm('לנקות את כל הסימונים ששולמו?')) return;
+    state = {};
+    saveState(state);
+    document.querySelectorAll('#tbody tr').forEach(function(tr){
+      tr.classList.remove('paid');
+      tr.querySelector('input').checked = false;
+    });
+    updateSummary();
+  });
+
+  updateSummary();
+
+  var currentRow = document.querySelector('tr.current');
+  if(currentRow){
+    setTimeout(function(){
+      currentRow.scrollIntoView({ block: 'center' });
+    }, 0);
+  }
+})();
+</script>
+</body>
+</html>
