@@ -183,8 +183,9 @@
   <header>
     <h1>📊 מעקב תשלומים חודשי</h1>
     <div class="subtitle">
+      הלוואה ל-5 שנים &nbsp;•&nbsp;
       התחלה: <b>5.9.2025</b> &nbsp;•&nbsp;
-      סוף: <b>5.1.2030</b> &nbsp;•&nbsp;
+      סוף: <b>5.9.2030</b> &nbsp;•&nbsp;
       יעד כולל: <b>₪110,000</b>
     </div>
     <div class="subtitle">
@@ -232,10 +233,10 @@
 (function(){
   var ORIGINAL_MONTHLY = 1833;
   var START_YEAR = 2025, START_MONTH0 = 8, START_DAY = 5;  // 5.9.2025
-  var END_YEAR = 2030, END_MONTH0 = 0, END_DAY = 5;         // 5.1.2030
+  var TOTAL_MONTHS = 60;             // 5-year loan term
   var TOTAL_TARGET = 110000;        // total goal for the whole schedule
   var ACTUAL_BALANCE_TODAY = 25750; // reported as already saved/paid as of this update
-  var STORAGE_KEY = 'monthlyPaymentTracker:v2';
+  var STORAGE_KEY = 'monthlyPaymentTracker:v3';
   var SEED_MARKER = STORAGE_KEY + ':seeded';
 
   var HE_MONTHS = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
@@ -258,8 +259,6 @@
 
   var now = new Date();
   var currentKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
-
-  var TOTAL_MONTHS = (END_YEAR - START_YEAR) * 12 + (END_MONTH0 - START_MONTH0) + 1;
 
   var months = [];
   var yearsMap = {};
@@ -307,13 +306,18 @@
     seedCompletedMonths();
   }
 
+  var lastMonth = months[months.length - 1];
+  var lastMonthParts = lastMonth.key.split('-');
+  var lastPaymentDateStr = START_DAY + '.' + parseInt(lastMonthParts[1], 10) + '.' + lastMonthParts[0];
   document.getElementById('newMonthlyInline').textContent = fmt(newMonthly);
   document.getElementById('recalcNote').innerHTML =
+    'הלוואה ל-5 שנים (60 תשלומים): מ-5.9.2025 עד ' + lastMonth.label +
+    ' (תשלום אחרון ב-' + lastPaymentDateStr + '), סיום תקופת ההלוואה 5.9.2030. ' +
     'נכון להיום הושלמו <b>' + monthsCompleted + '</b> תשלומים לפי התוכנית המקורית (₪1,833 לחודש), ' +
     'סה״כ תיאורטי של ' + fmt(monthsCompleted * ORIGINAL_MONTHLY) + '. ' +
     'דיווחת שבפועל יש לך כרגע <b>' + fmt(ACTUAL_BALANCE_TODAY) + '</b> ' +
     '(כ-' + fmt(ACTUAL_BALANCE_TODAY - monthsCompleted * ORIGINAL_MONTHLY) + ' יותר מהמתוכנן). ' +
-    'לכן, כדי להגיע ליעד של ' + fmt(TOTAL_TARGET) + ' עד 5.1.2030, התשלום החודשי הנדרש מכאן ואילך ' +
+    'לכן, כדי להגיע ליעד של ' + fmt(TOTAL_TARGET) + ', התשלום החודשי הנדרש מכאן ואילך ' +
     '(' + remainingMonths + ' תשלומים שנותרו) הוא <b>' + fmt(newMonthly) + '</b> לחודש.';
 
   var container = document.getElementById('yearsContainer');
