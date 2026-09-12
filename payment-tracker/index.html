@@ -140,6 +140,14 @@
   }
   tbody tr:last-child td{ border-bottom: none; }
   tbody tr.paid{ background: var(--good-soft); }
+  tbody tr.adjustment-row{
+    background: var(--accent-soft);
+    font-style: italic;
+    font-size: .85rem;
+    border-top: 1px dashed var(--accent);
+    border-bottom: 1px dashed var(--accent);
+  }
+  tbody tr.adjustment-row td{ border-bottom: 1px dashed var(--accent); }
   tbody tr.current td:first-child{ box-shadow: inset 3px 0 0 var(--accent); }
   tbody tr.current .month-cell{ font-weight: 700; }
   .month-cell{ text-align: center; }
@@ -281,6 +289,7 @@
   var newMonthly = remainingMonths > 0
     ? Math.round(((TOTAL_TARGET - ACTUAL_BALANCE_TODAY) / remainingMonths) * 100) / 100
     : 0;
+  var adjustment = ACTUAL_BALANCE_TODAY - monthsCompleted * ORIGINAL_MONTHLY;
 
   months.forEach(function(m){
     var isPast = m.index <= monthsCompleted;
@@ -377,6 +386,19 @@
       });
 
       tbody.appendChild(tr);
+
+      if(m.index === monthsCompleted && monthsCompleted < TOTAL_MONTHS && adjustment !== 0){
+        var adjRow = document.createElement('tr');
+        adjRow.className = 'adjustment-row';
+        var sign = adjustment >= 0 ? '+' : '−';
+        adjRow.innerHTML =
+          '<td class="idx">–</td>' +
+          '<td class="month-cell">התאמה ליתרה בפועל</td>' +
+          '<td>' + sign + fmt(Math.abs(adjustment)) + '</td>' +
+          '<td>' + fmt(ACTUAL_BALANCE_TODAY) + '</td>' +
+          '<td>—</td>';
+        tbody.appendChild(adjRow);
+      }
     });
 
     details.appendChild(table);
