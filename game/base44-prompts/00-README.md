@@ -10,5 +10,6 @@ Paste these into Base44 one at a time, in order. Test each version on a phone be
 | 04-v4-creativity-and-family.md | v4 | Adventure builder, family gallery, coloring pages by email |
 | 05-v5-payments-and-profiles.md | v5 | Real purchase and family subscription, child profiles, receipts |
 | 06-v6-polish-hebrew-launch.md | v6 | Hebrew (RTL) + English, accessibility, healthy metrics, launch checklist |
+| 07-v7-characters-and-shop.md | v7 | A cast of 6 characters with real personality, character sagas, a parent shop for digital and physical products, orders and admin |
 
 Every prompt repeats the hard rules on purpose, so the builder doesn't drift away from them in later versions.
