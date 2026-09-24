@@ -1,11 +1,5 @@
 [
   {
-    "task_id": "T-0006",
-    "type": "collect",
-    "cell": "4-6:parent_trust",
-    "note": "Parents' attitudes to children's apps/games, trust, monetization concerns, mediation, age 4-6. Need >=6 candidates, >=2 preferred full text."
-  },
-  {
     "task_id": "T-0007",
     "type": "grade",
     "cell": "4-6:parent_trust",
