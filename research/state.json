@@ -1,5 +1,5 @@
 {
-  "iteration": 0,
+  "iteration": 1,
   "phase": "research",
   "scope": "auto",
   "collection_closed": false,
@@ -11,7 +11,7 @@
       "approved": 0,
       "high_confidence": 0,
       "collect_rounds": 0,
-      "status": "open"
+      "status": "needs_sources"
     },
     "4-6:play_curiosity": {
       "sources": 0,
