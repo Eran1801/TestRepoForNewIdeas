@@ -1,35 +1,5 @@
 [
   {
-    "task_id": "T-0001",
-    "type": "collect",
-    "cell": "all:regulation",
-    "note": "US COPPA: primary text of the statute (15 U.S.C. 6501-6506) and/or FTC COPPA Rule 16 CFR Part 312, plus FTC official guidance/FAQ."
-  },
-  {
-    "task_id": "T-0002",
-    "type": "collect",
-    "cell": "all:regulation",
-    "note": "UK Age Appropriate Design Code: ICO official code text (standards incl. nudge techniques, default settings, data minimisation)."
-  },
-  {
-    "task_id": "T-0003",
-    "type": "collect",
-    "cell": "all:regulation",
-    "note": "GDPR provisions on children: Article 8 and Recitals 38, 58, 65, 71 from EUR-Lex official text."
-  },
-  {
-    "task_id": "T-0004",
-    "type": "collect",
-    "cell": "all:regulation",
-    "note": "Israeli Protection of Privacy Law 5741-1981 (incl. Amendment 13) primary text or Privacy Protection Authority official guidance."
-  },
-  {
-    "task_id": "T-0005",
-    "type": "grade",
-    "cell": "all:regulation",
-    "note": "Grade primary sources; aim for 1 verified finding per regime (COPPA, AADC, GDPR, IL)."
-  },
-  {
     "task_id": "T-0006",
     "type": "collect",
     "cell": "4-6:parent_trust",
@@ -352,5 +322,35 @@
     "type": "grade",
     "cell": "10-12:humor_story_aesthetics",
     "note": ""
+  },
+  {
+    "task_id": "T-0001",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "US COPPA: primary text of the statute (15 U.S.C. 6501-6506) and/or FTC COPPA Rule 16 CFR Part 312, plus FTC official guidance/FAQ. DEFERRED: official hosts blocked by egress policy; needs operator to allowlist domains (see questions.md Q-001)."
+  },
+  {
+    "task_id": "T-0002",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "UK Age Appropriate Design Code: ICO official code text (standards incl. nudge techniques, default settings, data minimisation). DEFERRED: official hosts blocked by egress policy; needs operator to allowlist domains (see questions.md Q-001)."
+  },
+  {
+    "task_id": "T-0003",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "GDPR provisions on children: Article 8 and Recitals 38, 58, 65, 71 from EUR-Lex official text. DEFERRED: official hosts blocked by egress policy; needs operator to allowlist domains (see questions.md Q-001)."
+  },
+  {
+    "task_id": "T-0004",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "Israeli Protection of Privacy Law 5741-1981 (incl. Amendment 13) primary text or Privacy Protection Authority official guidance. DEFERRED: official hosts blocked by egress policy; needs operator to allowlist domains (see questions.md Q-001)."
+  },
+  {
+    "task_id": "T-0005",
+    "type": "grade",
+    "cell": "all:regulation",
+    "note": "Grade primary sources; aim for 1 verified finding per regime (COPPA, AADC, GDPR, IL)."
   }
 ]
