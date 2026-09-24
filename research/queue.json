@@ -1,0 +1,356 @@
+[
+  {
+    "task_id": "T-0001",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "US COPPA: primary text of the statute (15 U.S.C. 6501-6506) and/or FTC COPPA Rule 16 CFR Part 312, plus FTC official guidance/FAQ."
+  },
+  {
+    "task_id": "T-0002",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "UK Age Appropriate Design Code: ICO official code text (standards incl. nudge techniques, default settings, data minimisation)."
+  },
+  {
+    "task_id": "T-0003",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "GDPR provisions on children: Article 8 and Recitals 38, 58, 65, 71 from EUR-Lex official text."
+  },
+  {
+    "task_id": "T-0004",
+    "type": "collect",
+    "cell": "all:regulation",
+    "note": "Israeli Protection of Privacy Law 5741-1981 (incl. Amendment 13) primary text or Privacy Protection Authority official guidance."
+  },
+  {
+    "task_id": "T-0005",
+    "type": "grade",
+    "cell": "all:regulation",
+    "note": "Grade primary sources; aim for 1 verified finding per regime (COPPA, AADC, GDPR, IL)."
+  },
+  {
+    "task_id": "T-0006",
+    "type": "collect",
+    "cell": "4-6:parent_trust",
+    "note": "Parents' attitudes to children's apps/games, trust, monetization concerns, mediation, age 4-6. Need >=6 candidates, >=2 preferred full text."
+  },
+  {
+    "task_id": "T-0007",
+    "type": "grade",
+    "cell": "4-6:parent_trust",
+    "note": ""
+  },
+  {
+    "task_id": "T-0008",
+    "type": "collect",
+    "cell": "7-9:parent_trust",
+    "note": "Parents' attitudes to children's apps/games, trust, monetization concerns, mediation, age 7-9. Need >=6 candidates, >=2 preferred full text."
+  },
+  {
+    "task_id": "T-0009",
+    "type": "grade",
+    "cell": "7-9:parent_trust",
+    "note": ""
+  },
+  {
+    "task_id": "T-0010",
+    "type": "collect",
+    "cell": "10-12:parent_trust",
+    "note": "Parents' attitudes to children's apps/games, trust, monetization concerns, mediation, age 10-12. Need >=6 candidates, >=2 preferred full text."
+  },
+  {
+    "task_id": "T-0011",
+    "type": "grade",
+    "cell": "10-12:parent_trust",
+    "note": ""
+  },
+  {
+    "task_id": "T-0012",
+    "type": "collect",
+    "cell": "4-6:play_curiosity",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0013",
+    "type": "grade",
+    "cell": "4-6:play_curiosity",
+    "note": ""
+  },
+  {
+    "task_id": "T-0014",
+    "type": "collect",
+    "cell": "4-6:intrinsic_motivation",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0015",
+    "type": "grade",
+    "cell": "4-6:intrinsic_motivation",
+    "note": ""
+  },
+  {
+    "task_id": "T-0016",
+    "type": "collect",
+    "cell": "4-6:emotion_failure",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0017",
+    "type": "grade",
+    "cell": "4-6:emotion_failure",
+    "note": ""
+  },
+  {
+    "task_id": "T-0018",
+    "type": "collect",
+    "cell": "4-6:learning_progression",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0019",
+    "type": "grade",
+    "cell": "4-6:learning_progression",
+    "note": ""
+  },
+  {
+    "task_id": "T-0020",
+    "type": "collect",
+    "cell": "4-6:creativity_imagination",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0021",
+    "type": "grade",
+    "cell": "4-6:creativity_imagination",
+    "note": ""
+  },
+  {
+    "task_id": "T-0022",
+    "type": "collect",
+    "cell": "4-6:social_safety",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0023",
+    "type": "grade",
+    "cell": "4-6:social_safety",
+    "note": ""
+  },
+  {
+    "task_id": "T-0024",
+    "type": "collect",
+    "cell": "4-6:attention_stopping",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0025",
+    "type": "grade",
+    "cell": "4-6:attention_stopping",
+    "note": ""
+  },
+  {
+    "task_id": "T-0026",
+    "type": "collect",
+    "cell": "4-6:humor_story_aesthetics",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 4-6."
+  },
+  {
+    "task_id": "T-0027",
+    "type": "grade",
+    "cell": "4-6:humor_story_aesthetics",
+    "note": ""
+  },
+  {
+    "task_id": "T-0028",
+    "type": "collect",
+    "cell": "7-9:play_curiosity",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0029",
+    "type": "grade",
+    "cell": "7-9:play_curiosity",
+    "note": ""
+  },
+  {
+    "task_id": "T-0030",
+    "type": "collect",
+    "cell": "7-9:intrinsic_motivation",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0031",
+    "type": "grade",
+    "cell": "7-9:intrinsic_motivation",
+    "note": ""
+  },
+  {
+    "task_id": "T-0032",
+    "type": "collect",
+    "cell": "7-9:emotion_failure",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0033",
+    "type": "grade",
+    "cell": "7-9:emotion_failure",
+    "note": ""
+  },
+  {
+    "task_id": "T-0034",
+    "type": "collect",
+    "cell": "7-9:learning_progression",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0035",
+    "type": "grade",
+    "cell": "7-9:learning_progression",
+    "note": ""
+  },
+  {
+    "task_id": "T-0036",
+    "type": "collect",
+    "cell": "7-9:creativity_imagination",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0037",
+    "type": "grade",
+    "cell": "7-9:creativity_imagination",
+    "note": ""
+  },
+  {
+    "task_id": "T-0038",
+    "type": "collect",
+    "cell": "7-9:social_safety",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0039",
+    "type": "grade",
+    "cell": "7-9:social_safety",
+    "note": ""
+  },
+  {
+    "task_id": "T-0040",
+    "type": "collect",
+    "cell": "7-9:attention_stopping",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0041",
+    "type": "grade",
+    "cell": "7-9:attention_stopping",
+    "note": ""
+  },
+  {
+    "task_id": "T-0042",
+    "type": "collect",
+    "cell": "7-9:humor_story_aesthetics",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 7-9."
+  },
+  {
+    "task_id": "T-0043",
+    "type": "grade",
+    "cell": "7-9:humor_story_aesthetics",
+    "note": ""
+  },
+  {
+    "task_id": "T-0044",
+    "type": "collect",
+    "cell": "10-12:play_curiosity",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0045",
+    "type": "grade",
+    "cell": "10-12:play_curiosity",
+    "note": ""
+  },
+  {
+    "task_id": "T-0046",
+    "type": "collect",
+    "cell": "10-12:intrinsic_motivation",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0047",
+    "type": "grade",
+    "cell": "10-12:intrinsic_motivation",
+    "note": ""
+  },
+  {
+    "task_id": "T-0048",
+    "type": "collect",
+    "cell": "10-12:emotion_failure",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0049",
+    "type": "grade",
+    "cell": "10-12:emotion_failure",
+    "note": ""
+  },
+  {
+    "task_id": "T-0050",
+    "type": "collect",
+    "cell": "10-12:learning_progression",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0051",
+    "type": "grade",
+    "cell": "10-12:learning_progression",
+    "note": ""
+  },
+  {
+    "task_id": "T-0052",
+    "type": "collect",
+    "cell": "10-12:creativity_imagination",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0053",
+    "type": "grade",
+    "cell": "10-12:creativity_imagination",
+    "note": ""
+  },
+  {
+    "task_id": "T-0054",
+    "type": "collect",
+    "cell": "10-12:social_safety",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0055",
+    "type": "grade",
+    "cell": "10-12:social_safety",
+    "note": ""
+  },
+  {
+    "task_id": "T-0056",
+    "type": "collect",
+    "cell": "10-12:attention_stopping",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0057",
+    "type": "grade",
+    "cell": "10-12:attention_stopping",
+    "note": ""
+  },
+  {
+    "task_id": "T-0058",
+    "type": "collect",
+    "cell": "10-12:humor_story_aesthetics",
+    "note": "Need >=6 candidates, >=2 preferred (reviews, experiments, longitudinal, associations) with full text, ages 10-12."
+  },
+  {
+    "task_id": "T-0059",
+    "type": "grade",
+    "cell": "10-12:humor_story_aesthetics",
+    "note": ""
+  }
+]
