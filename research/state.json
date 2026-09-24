@@ -1,9 +1,9 @@
 {
-  "iteration": 0,
+  "iteration": 1,
   "phase": "research",
   "max_iterations": 60,
   "dry_streak": 0,
-  "current_cell": null,
+  "current_cell": "all:regulation",
   "cells": {
     "all:regulation": {
       "approved": 0,
